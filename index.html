@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROFFA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="stage" id="stage">
+    <h1 class="logo">R<button class="logo-o" id="logo-o" aria-label="What is this?" aria-controls="info">O<span class="logo-hint" id="logo-hint" aria-hidden="true" hidden>↑ click</span></button>FFA</h1>
+  </main>
+
+  <footer class="corner corner-left">Rotterdam · 2026</footer>
+  <p class="corner corner-right" id="found" aria-live="polite"></p>
+
+  <div class="info" id="info" role="dialog" aria-modal="true" aria-labelledby="info-title" hidden>
+    <div class="info-box">
+      <div class="info-pause" aria-hidden="true"><span></span><span></span></div>
+      <h2 id="info-title">ROFFA</h2>
+      <p>
+        A project about the collective and about collecting,
+        now done digitally.
+      </p>
+      <p>
+        Stickers & small pieces of art, from Rotterdam.
+      </p>
+      <p class="info-hint">Click a sticker to discover another one.</p>
+      <button class="info-close" id="info-close">Continue</button>
+    </div>
+  </div>
+  <script src="stickers/stickers.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

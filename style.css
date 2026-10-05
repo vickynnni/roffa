@@ -1,0 +1,257 @@
+:root {
+  --paper: #d5d7da; /* soft off-white, easier on the eyes than pure white on black */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+}
+
+.logo {
+  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(4rem, 18vw, 16rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--paper);
+  user-select: none;
+  pointer-events: none;
+  position: relative;
+  z-index: 3;
+}
+
+.sticker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  cursor: pointer;
+  z-index: 2;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sticker img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+  transition: transform 0.2s ease;
+}
+
+.sticker:hover img {
+  transform: scale(1.1);
+}
+
+.sticker.pop img {
+  animation: pop 0.35s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.6) rotate(-12deg); }
+  100% { transform: scale(1); }
+}
+
+/* ---- The O of ROFFA opens the info panel ---- */
+.logo-o {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: opacity 0.2s ease;
+}
+
+.logo-o:hover {
+  opacity: 0.8;
+}
+
+.logo-o:focus-visible {
+  outline: 3px solid var(--paper);
+  outline-offset: 4px;
+}
+
+/* ---- Info panel (everything pauses behind it) ---- */
+.info {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fade-in 0.25s ease;
+}
+
+.info[hidden] {
+  display: none;
+}
+
+.info-box {
+  max-width: 460px;
+  width: 100%;
+  background: var(--paper);
+  color: #0a0a0a;
+  padding: 32px;
+  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  animation: rise 0.3s ease;
+}
+
+.info-pause {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.info-pause span {
+  width: 8px;
+  height: 28px;
+  background: #0a0a0a;
+}
+
+.info-box h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+
+.info-box p + p {
+  margin-top: 12px;
+}
+
+.info-hint {
+  opacity: 0.6;
+  font-size: 0.875rem;
+}
+
+.info-close {
+  margin-top: 24px;
+  font: inherit;
+  font-weight: 700;
+  color: var(--paper);
+  background: #0a0a0a;
+  border: 0;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.info-close:focus-visible {
+  outline: 3px solid #0a0a0a;
+  outline-offset: 3px;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info,
+  .info-box {
+    animation: none;
+  }
+}
+
+/* ---- Hint: the O breathes until someone clicks it the first time ---- */
+.logo-o {
+  position: relative;
+}
+
+.logo-o.hinting {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.logo-hint {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+
+.logo-hint[hidden] {
+  display: none;
+}
+
+/* ---- Corners: place + collection counter ---- */
+.corner {
+  position: fixed;
+  bottom: 16px;
+  z-index: 4;
+  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+  text-shadow: 0 0 6px #0a0a0a, 0 0 2px #0a0a0a;
+  pointer-events: none;
+  user-select: none;
+}
+
+.corner-left {
+  left: 16px;
+}
+
+.corner-right {
+  right: 16px;
+}
+
+.corner-right.bump {
+  animation: bump 0.6s ease;
+}
+
+@keyframes bump {
+  30% { color: var(--paper); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-o.hinting,
+  .corner-right.bump {
+    animation: none;
+  }
+}
