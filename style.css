@@ -156,8 +156,54 @@ body {
   font-size: 0.875rem;
 }
 
-.info-close {
+.info-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-top: 24px;
+}
+
+/* Secondary button next to Continue: same size, outlined */
+.info-submit {
+  font: inherit;
+  font-weight: 700;
+  color: #0a0a0a;
+  background: none;
+  border: 2px solid #0a0a0a;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.info-submit:hover,
+.info-submit.copied {
+  background: #0a0a0a;
+  color: var(--paper);
+}
+
+.info-box .info-copied {
+  margin-top: 12px;
+  font-size: 0.875rem;
+}
+
+.info-copied strong {
+  user-select: all; /* one click selects the whole address */
+}
+
+.info-copied:empty {
+  display: none;
+}
+
+.info-submit[hidden] {
+  display: none;
+}
+
+.info-submit:focus-visible {
+  outline: 3px solid #0a0a0a;
+  outline-offset: 3px;
+}
+
+.info-close {
   font: inherit;
   font-weight: 700;
   color: var(--paper);

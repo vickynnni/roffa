@@ -30,7 +30,11 @@
         Stickers & small pieces of art, from Rotterdam.
       </p>
       <p class="info-hint">Click a sticker to discover another one.</p>
-      <button class="info-close" id="info-close">Continue</button>
+      <div class="info-actions">
+        <button class="info-close" id="info-close">Continue</button>
+        <button type="button" class="info-submit" id="info-submit" hidden>Send a sticker</button>
+      </div>
+      <p class="info-copied" id="info-copied" aria-live="polite"></p>
     </div>
   </div>
   <script src="stickers/stickers.js"></script>

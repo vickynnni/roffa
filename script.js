@@ -9,6 +9,9 @@ const FLOAT = 0.07;           // how far each sticker drifts from its spot (rela
 const FLOAT_PERIOD = [7, 12]; // seconds for one slow back-and-forth (min, max)
 const STICKER_DIR = "stickers/";
 const IMAGE_RE = /\.(png|jpe?g|webp|gif|svg|avif)$/i;
+// Where "Send a sticker" goes: an email address (copied on click) or a form link.
+// The button in the info panel stays hidden while this is empty.
+const SUBMIT_URL = "reciprocoenazul@gmail.com";
 
 const stage = document.getElementById("stage");
 const logo = document.querySelector(".logo");
@@ -285,6 +288,50 @@ const info = document.getElementById("info");
 const logoO = document.getElementById("logo-o");
 const infoClose = document.getElementById("info-close");
 const logoHint = document.getElementById("logo-hint");
+
+// The Clipboard API only works on https/localhost, so fall back to the old way
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e2) {}
+    ta.remove();
+    return ok;
+  }
+}
+
+// "Send a sticker": with an email address it copies the address and says so;
+// with anything else (a form link) it opens that in a new tab
+if (SUBMIT_URL) {
+  const submit = document.getElementById("info-submit");
+  const copiedNote = document.getElementById("info-copied");
+  const isEmail = /^[^\s@/:]+@[^\s@/]+$/.test(SUBMIT_URL);
+  let resetFlash;
+
+  submit.addEventListener("click", async () => {
+    if (!isEmail) {
+      window.open(SUBMIT_URL, "_blank", "noopener");
+      return;
+    }
+    const ok = await copyText(SUBMIT_URL);
+    submit.classList.add("copied");
+    // The address stays visible, so it can also be copied by hand if copying failed
+    const addr = document.createElement("strong");
+    addr.textContent = SUBMIT_URL;
+    copiedNote.replaceChildren(addr, ok ? " copied to clipboard ✓" : "");
+    clearTimeout(resetFlash);
+    resetFlash = setTimeout(() => submit.classList.remove("copied"), 1500);
+  });
+  submit.hidden = false;
+}
 
 // Until someone opens the info once, the O breathes and shows a small hint
 if (!store.get("roffa-o-seen")) {
